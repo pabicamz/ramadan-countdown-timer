@@ -3,6 +3,8 @@ const hourEl = document.querySelector('.hours');
 const minuteEl = document.querySelector('.minutes');
 const secondEl = document.querySelector('.seconds');
 const head = document.querySelector('.section-header');
+const liveTimeEl = document.querySelector('.live-time')
+console.log(liveTimeEl);
 
 function format(n) {
   return n < 10 ? `0${n}` : `${n}`;
@@ -13,7 +15,7 @@ let interval;
 function countDown(launchingTime) {
   const now = new Date().getTime();
   const t = launchingTime - now;
-  // t: the total remaining time in milliseconds
+  // t: the total remaining time in ms
   // the goal is to split it into: Days, Hours, Mins and Secs
 
   // if it's launchingTime change the header innerHTML to 'Ramadan Mubarak!'
@@ -44,6 +46,7 @@ function countDown(launchingTime) {
   secondEl.innerHTML = format(Math.floor((t % oneMin) / 1000));
   // (t % oneMinute) strips away minutes, leaving only the leftover ms after full minutes
   // divide by 1000 to convert ms(millisecond) to second
+
 }
 
 async function init() {
@@ -56,3 +59,30 @@ async function init() {
 }
 
 init();
+
+// live date & time
+function updateLiveTime() {
+  const now = new Date();
+  const hour = now.getHours();
+
+  const amPm = hour >= 12 ? 'PM' : 'AM'
+
+  const datePart = now.toLocaleDateString('en-GB', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  })
+
+  const timePart = now.toLocaleTimeString('en-GB', {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    // hour12: true
+  })
+
+  liveTimeEl.textContent = `${datePart} - ${timePart} ${amPm}`
+}
+
+updateLiveTime()
+setInterval(updateLiveTime, 1000)
