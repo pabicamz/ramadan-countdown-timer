@@ -1,67 +1,58 @@
-const months = [
-  'jan',
-  'feb',
-  'mar',
-  'apr',
-  'may',
-  'jun',
-  'jul',
-  'aug',
-  'sep',
-  'oct',
-  'nov',
-  'dec',
-];
-
-const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
-
-const items = document.querySelectorAll('.deadline-format h1');
+const dayEl = document.querySelector('.days');
+const hourEl = document.querySelector('.hours');
+const minuteEl = document.querySelector('.minutes');
+const secondEl = document.querySelector('.seconds');
 const head = document.querySelector('.section-header');
 
-// setting the date for the launching day
-const launchingDate = new Date(2026, 1, 18, 0, 0, 0);
-
-// launching day in milisecond
-const launchingTime = launchingDate.getTime();
-
-function countdown() {
-  const now = new Date().getTime();
-
-  const t = launchingTime - now;
-
-  // values in miliseconds
-  const oneDay = 24 * 60 * 60 * 1000;
-  const oneHour = 60 * 60 * 1000;
-  const oneMinute = 60 * 1000;
-
-  // calculating all days, hours, minutes, seconds
-  let days = t / oneDay;
-  days = Math.floor(days);
-  let hours = Math.floor((t % oneDay) / oneHour);
-  let minutes = Math.floor((t % oneHour) / oneMinute);
-  let seconds = Math.floor((t % oneMinute) / 1000);
-
-  const values = [days, hours, minutes, seconds];
-
-  function format(item) {
-    return item < 10 ? `0${item}` : `${item}`;
-  }
-
-  items.forEach(function (item, index) {
-    item.innerHTML = format(values[index]);
-  });
-
-  if (t < 0) {
-    clearInterval(interval);
-    head.innerHTML = 'We are officially launching the website';
-    head.style.letterSpacing = '0.1rem';
-
-    items.forEach(function (item) {
-      item.innerHTML = '00';
-    });
-  }
+function format(n) {
+  return n < 10 ? `0${n}` : `${n}`;
 }
 
-let interval = setInterval(countdown, 1000);
+let interval;
 
-countdown();
+function countDown(launchingTime) {
+  const now = new Date().getTime();
+  const t = launchingTime - now;
+  // t: the total remaining time in milliseconds
+  // the goal is to split it into: Days, Hours, Mins and Secs
+
+  // if it's launchingTime change the header innerHTML to 'Ramadan Mubarak!'
+  // and format the day, hour, min and sec element to 00
+  if (t < 0) {
+    clearInterval(interval);
+    head.innerHTML = 'Ramadan Mubarak!';
+    [dayEl, hourEl, minuteEl, secondEl].forEach((el) => (el.innerHTML = '00'));
+    return;
+  }
+
+  // convert it into milliseconds
+  const oneDay = 24 * 60 * 60 * 1000;
+  const oneHour = 60 * 60 * 1000;
+  const oneMin = 60 * 1000;
+
+  dayEl.innerHTML = format(Math.floor(t / oneDay));
+  // divide total milliseconds by milliseconds-in-a-day
+
+  hourEl.innerHTML = format(Math.floor((t % oneDay) / oneHour));
+  // (t % oneDay) strips away the Days, leaving only the leftover ms after full-days are removed
+  // then divide that remainder by oneHour to get whole hours
+
+  minuteEl.innerHTML = format(Math.floor((t % oneHour) / oneMin));
+  // (t % oneHour) strips away the Hours(and Days), leaving only the leftover ms after full-hrs are removed
+  // then divide it by oneMin to get whole minutes
+
+  secondEl.innerHTML = format(Math.floor((t % oneMin) / 1000));
+  // (t % oneMinute) strips away minutes, leaving only the leftover ms after full minutes
+  // divide by 1000 to convert ms(millisecond) to second
+}
+
+async function init() {
+  const launchingTime = new Date('2027-02-17T00:00:00').getTime();
+
+  head.innerHTML = 'Ramadan Countdown';
+
+  countDown(launchingTime);
+  interval = setInterval(() => countDown(launchingTime), 1000);
+}
+
+init();
