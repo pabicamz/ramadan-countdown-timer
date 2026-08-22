@@ -3,7 +3,7 @@ const hourEl = document.querySelector('.hours');
 const minuteEl = document.querySelector('.minutes');
 const secondEl = document.querySelector('.seconds');
 const head = document.querySelector('.section-header');
-const liveTimeEl = document.querySelector('.live-time')
+const liveTimeEl = document.querySelector('.live-time');
 console.log(liveTimeEl);
 
 function format(n) {
@@ -46,43 +46,57 @@ function countDown(launchingTime) {
   secondEl.innerHTML = format(Math.floor((t % oneMin) / 1000));
   // (t % oneMinute) strips away minutes, leaving only the leftover ms after full minutes
   // divide by 1000 to convert ms(millisecond) to second
-
 }
 
-async function init() {
-  const launchingTime = new Date('2027-02-17T00:00:00').getTime();
+async function initCountdown() {
+  head.innerHTML = 'Ramadan Countdown 2027';
 
-  head.innerHTML = 'Ramadan Countdown';
+  let launchingTime;
+
+  try {
+    const res = await fetch('https://ramadan.zakiego.com/api/countdown');
+    if (!res.ok) throw new Error('Network response was not ok');
+    const data = await res.json();
+
+    launchingTime = new Date(data.targetDate).getTime();
+  } catch (err) {
+    console.error(
+      'Failed to fetch Ramadan date, falling back to hardcoded date:',
+      err,
+    );
+    // fallback in case the API is down
+    launchingTime = new Date('2027-02-07T00:00:00Z').getTime();
+  }
 
   countDown(launchingTime);
   interval = setInterval(() => countDown(launchingTime), 1000);
 }
 
-init();
+initCountdown();
 
 // live date & time
 function updateLiveTime() {
   const now = new Date();
   const hour = now.getHours();
 
-  const amPm = hour >= 12 ? 'PM' : 'AM'
+  const amPm = hour >= 12 ? 'PM' : 'AM';
 
   const datePart = now.toLocaleDateString('en-GB', {
     weekday: 'long',
     day: 'numeric',
     month: 'long',
-    year: 'numeric'
-  })
+    year: 'numeric',
+  });
 
   const timePart = now.toLocaleTimeString('en-GB', {
     hour: '2-digit',
     minute: '2-digit',
     second: '2-digit',
     // hour12: true
-  })
+  });
 
-  liveTimeEl.textContent = `${datePart} - ${timePart} ${amPm}`
+  liveTimeEl.textContent = `${datePart} - ${timePart} ${amPm}`;
 }
 
-updateLiveTime()
-setInterval(updateLiveTime, 1000)
+updateLiveTime();
+setInterval(updateLiveTime, 1000);
