@@ -30,8 +30,8 @@ This project uses the open-source [Ramadan Countdown API](https://github.com/zak
 
 ## Live Demo
 
-[Add your deployed link here]
+[Link](https://pabicamz.github.io/ramadan-countdown-timer/)
 
 ## Author
 
-Built by [Karamo](https://github.com/karamo10) — [LinkedIn](https://www.linkedin.com/in/karamo-camara-ab4619339/)
+Built by [Karamo](https://github.com/pabicamz) — [LinkedIn](https://www.linkedin.com/in/karamo-camara-ab4619339/)
