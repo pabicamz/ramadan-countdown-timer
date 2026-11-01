@@ -6,9 +6,8 @@ A simple, countdown timer for the start of Ramadan - built with vanilla HTML, CS
 
 - Live countdown to Ramadan 2027 (days, hours, minutes, seconds)
 - Real-time clock and date display
-- Fetches the target date dynamically from the [zakiego Ramadan API](https://ramadan.zakiego.com/api/countdown) instead of a hardcoded date
+- Fetches the target date dynamically from the [zakiego Ramadan API](https://ramadan.zakiego.com/api/countdown) 
 - Falls back gracefully to a local date if the API is unreachable
-- Fully responsive layout
 
 ## Tech Stack
 
@@ -34,4 +33,4 @@ This project uses the open-source [Ramadan Countdown API](https://github.com/zak
 
 ## Author
 
-Built by [Karamo](https://github.com/pabicamz) — [LinkedIn](https://www.linkedin.com/in/karamo-camara-ab4619339/)
+Built by [Karamo](https://github.com/pabicamz) — [LinkedIn](https://www.linkedin.com/in/karamo-camara-ab4619339/) - [Instagram](https://www.instagram.com/pabicamz.dev)
