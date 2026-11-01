@@ -33,4 +33,4 @@ This project uses the open-source [Ramadan Countdown API](https://github.com/zak
 
 ## Author
 
-Built by [Karamo](https://github.com/pabicamz) — [LinkedIn](https://www.linkedin.com/in/karamo-camara-ab4619339/) - [Instagram](https://www.instagram.com/pabicamz.dev)
+Built by [Karamo](https://github.com/pabicamz) — [LinkedIn](https://www.linkedin.com/in/karamo-camara-ab4619339/) — [Instagram](https://www.instagram.com/pabicamz.dev)
